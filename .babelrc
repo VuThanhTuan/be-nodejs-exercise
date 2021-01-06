@@ -1,0 +1,11 @@
+{
+  "presets": [
+    "stage-0",
+    "env"
+    // "@babel/preset-es2015"
+  ],
+  "plugins": [
+    "transform-runtime",
+    "transform-async-to-generator"
+  ]
+}
