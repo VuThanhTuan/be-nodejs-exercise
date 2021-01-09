@@ -1,6 +1,6 @@
 import { response } from 'express'
 import typeModel from './type.model'
-import erorConstants from '../../constants/error'
+import errorConstants from '../../constants/error'
 
 
 class TypeProductService {
@@ -20,7 +20,7 @@ class TypeProductService {
       if (!types) {
         throw {
           code: 404,
-          name: erorConstants.notFoundError.TypeNotFound
+          name: errorConstants.notFoundError.TypeNotFound
         }
       }
       return types
@@ -35,7 +35,7 @@ class TypeProductService {
       if (!type) {
         throw {
           code: 404,
-          name: erorConstants.notFoundError.TypeNotFound
+          name: errorConstants.notFoundError.TypeNotFound
         }
       }
       return type
@@ -50,7 +50,7 @@ class TypeProductService {
       if (!type) {
         throw {
           code: 404,
-          name: erorConstants.notFoundError.TypeNotFound
+          name: errorConstants.notFoundError.TypeNotFound
         }
       }
       const updateType = await typeModel.updateOne({ _id: id }, data)
@@ -66,7 +66,7 @@ class TypeProductService {
       if (!typeById) {
         throw {
           code: 404,
-          name: erorConstants.notFoundError.TypeNotFound
+          name: errorConstants.notFoundError.TypeNotFound
         }
       }
       await typeModel.findByIdAndRemove(req)

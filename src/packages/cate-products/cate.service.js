@@ -32,7 +32,7 @@ class CateProductService {
       throw error
     }
   }
-  //add new category by a type product
+  // create new category by a type product
   async createTypeProduct(req, res) {
     try {
       const newCategory = await new cateModel(req).save()

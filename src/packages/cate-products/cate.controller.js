@@ -1,7 +1,9 @@
 import CateProductService from './cate.service'
 import checkError from '../../utils/checkError'
+import ProductService from '../products/product.service'
 
 const cateProductService = new CateProductService()
+const productService = new ProductService()
 
 //get All category product
 async function getAllCategory(req, res) {
@@ -92,6 +94,7 @@ async function deleteCategory(req,res) {
   try {
     const categoryId = req.params.categoryId
     await cateProductService.deleteCategoryById(categoryId)
+    await productService.deleteManyByCategoryId(categoryId)
     return res.status(200).json(true)
   } catch (error) {
     checkError(error, res)
