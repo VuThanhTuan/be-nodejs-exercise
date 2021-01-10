@@ -19,7 +19,7 @@ const productSchema = new Schema({
       type: String
     }
   ],
-  cateId: {
+  categoryId: {
     type: Types.ObjectId,
     ref: 'cate-products',
     required: true

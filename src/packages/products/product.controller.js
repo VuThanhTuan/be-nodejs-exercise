@@ -28,7 +28,7 @@ async function createProduct(req, res) {
         productName: req.body.productName,
         price: req.body.price,
         description: req.body.description,
-        cateId: req.body.cateId,
+        categoryId: req.body.categoryId,
         images: req.images
       }
       const newProduct = await productService.create(dataProduct)
@@ -65,7 +65,7 @@ async function updateProduct(req, res) {
         productName: req.body.productName,
         price: req.body.price,
         description: req.body.description,
-        cateId: req.body.cateId,
+        categoryId: req.body.categoryId,
         images: req.images
       }
       const updateProduct = await productService.update(dataProduct)
@@ -78,7 +78,18 @@ async function updateProduct(req, res) {
 // get all product
 async function findAllProduct(req, res) {
   try {
-    const products = await productService.FindAll();
+    const page = parseInt(req.query.page);
+    const products = await productService.FindAll(page);
+    return res.status(200).json({ status: 200, message: "get products successfully", data: products })
+  } catch (error) {
+    checkError(error, res)
+  }
+}
+// get all product by categoryId 
+async function findAllProductByCategory(req, res) {
+  try {
+    const categoryId = req.params.categoryId;
+    const products = await productService.FindMany(categoryId)
     return res.status(200).json({ status: 200, message: "get products successfully", data: products })
   } catch (error) {
     checkError(error, res)
@@ -108,5 +119,6 @@ export default {
   updateProduct,
   createProduct,
   deleteProduct,
-  deleteAllProduct
+  deleteAllProduct,
+  findAllProductByCategory
 }

@@ -16,31 +16,35 @@ class ProductService {
   async update(req, res) {
     try {
       const product = await productModel.findById(req)
-      if(!product) {
+      if (!product) {
         throw {
           code: 404,
           name: errorConstants.notFoundError.ProductNotFound
         }
       }
-      const updateProduct = await productModel.updateOne({_id: req}, res)
+      const updateProduct = await productModel.updateOne({ _id: req }, res)
       return updateProduct
     } catch (error) {
       throw error
     }
   }
   //find all product exist in database
-  async FindAll() {
+  async FindAll(page) {
     try {
-      const products = productModel.find()
+      const PAGE_SIZE = 10;
+      const skip = (page - 1) * PAGE_SIZE;
+      const products = productModel.find({}).skip(skip).limit(PAGE_SIZE)
       return products
     } catch (error) {
       throw error
     }
   }
-  //find products with cateId  
-  async FindMany(query) {
+  //find products with categoryId  
+  async FindMany(categoryId) {
     try {
-      const products = await productModel.find(query)
+      const PAGE_SIZE = 10;
+      const skip = (page - 1) * PAGE_SIZE;
+      const products = await productModel.find({categoryId: categoryId}).skip(skip).limit(PAGE_SIZE)
       if (!products) {
         throw {
           code: 404,
@@ -56,7 +60,7 @@ class ProductService {
   async delete(req) {
     try {
       const product = await productModel.findByIdAndRemove(req)
-      if(!product) {
+      if (!product) {
         throw {
           code: 404,
           name: errorConstants.notFoundError.ProductNotFound
@@ -68,9 +72,9 @@ class ProductService {
     }
   }
   // Delete many by categoryId
-  async deleteManyByCategoryId(req){
+  async deleteManyByCategoryId(req) {
     try {
-      await productModel.deleteMany({cateId: req})
+      await productModel.deleteMany({ categoryId: req })
       return true
     } catch (error) {
       throw error

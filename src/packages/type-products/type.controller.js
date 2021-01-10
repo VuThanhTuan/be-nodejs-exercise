@@ -107,7 +107,6 @@ async function deleteTypeProduct(req, res) {
   }
 }
 
-
 export default {
   createType,
   findAll,
