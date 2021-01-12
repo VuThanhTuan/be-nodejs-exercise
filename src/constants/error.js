@@ -13,9 +13,22 @@ const notFoundError = {
     CateNotFound: 'Category product note found'
 }
 
-
-
+const errorResponse = {
+    create: 'Create failed!',
+    permission: ' You are not author',
+    update: 'Update failed!',
+    destroy: 'Delete failed!',
+    show: 'Not Found!',
+    limit: 'File size must be smaller 5MB',
+    invalidFile: 'File format must be png or jpg or gif or jpeg!',
+    menu: 'Name or section fields already existed'
+}
+const dataAlreadyExisted = {
+    message: 'Data is already existed'
+}
 export default {
     badRequestError,
     notFoundError,
+    errorResponse,
+    dataAlreadyExisted
 }

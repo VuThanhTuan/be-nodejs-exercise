@@ -10,9 +10,7 @@ const storage = multer.diskStorage({
     } else {
       req.images.push(file.originalname)
     }
-
-
-    
+   
     cb(null, file.originalname)
 
   }

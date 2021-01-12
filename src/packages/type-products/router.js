@@ -1,13 +1,13 @@
 import { Router } from 'express'
-import typeProductController from './type.controller'
+import typeProductController from './controller'
+import validator from '../validator'
 
 const router = Router()
 
-router.post('', typeProductController.createType)
+router.post('', validator.typeProduct.validateStore, typeProductController.createType)
 router.get('', typeProductController.findAll)
 router.delete('/:typeId', typeProductController.deleteTypeProduct)
 router.put('/:typeId', typeProductController.updateType)
-router.get('/:typeId', typeProductController.getTypeProductByTypeId)
 
 
 export default router

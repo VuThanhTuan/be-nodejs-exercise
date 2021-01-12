@@ -1,4 +1,4 @@
-import cateProductController from './cate.controller'
+import cateProductController from './controller'
 import  Router from 'express'
 
 const router = Router()
