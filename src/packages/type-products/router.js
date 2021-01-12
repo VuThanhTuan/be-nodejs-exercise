@@ -7,7 +7,7 @@ const router = Router()
 router.post('', validator.typeProduct.validateStore, typeProductController.createType)
 router.get('', typeProductController.findAll)
 router.delete('/:typeId', typeProductController.deleteTypeProduct)
-router.put('/:typeId', typeProductController.updateType)
+router.put('/:typeId', validator.typeProduct.validateUpdate,typeProductController.updateType)
 
 
 export default router

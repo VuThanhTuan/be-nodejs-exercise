@@ -10,7 +10,7 @@ async function destroy(id) {
   return productModel.findByIdAndRemove(id)
 }
 async function getAll(page) {
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 5;
   const skip = (page - 1) * PAGE_SIZE;
   return productModel.find({}).skip(skip).limit(PAGE_SIZE)
 }

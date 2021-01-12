@@ -1,6 +1,6 @@
 import errorConstants from '../../constants/error'
 import lodash from 'lodash'
-import repository from '../type-products/repository'
+import repository from '../cate-products/repository'
 
 const ALLOWED_ATTRIBUTES = ['name', 'typeId']
 

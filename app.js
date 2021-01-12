@@ -1,4 +1,4 @@
-import bodyParser from 'body-parser';
+// import bodyParser from 'body-parser';
 import express from 'express';
 import connectToDb from './src/db/connect';
 import config from './src/config';
@@ -17,7 +17,8 @@ connectToDb(config.database);
 // app.use(bodyParser.urlencoded({
 //   extended: false
 // }))
-//
+
+// 3rd party middleware
 app.use(morgan('dev'))
 app.use(cors())
 app.use(compress())
@@ -25,6 +26,7 @@ app.use(methodOverride())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(helmet())
+
 app.use(router())
 app.use(handleValidationError)
 

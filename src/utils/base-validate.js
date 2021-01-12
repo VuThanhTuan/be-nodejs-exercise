@@ -1,7 +1,6 @@
 export default function customizeErrorMessage() {
   return (errors) => {
     // eslint-disable-next-line array-callback-return
-    console.log(error)
     errors.map((err) => {
       switch (err.type) {
         case 'string.min':

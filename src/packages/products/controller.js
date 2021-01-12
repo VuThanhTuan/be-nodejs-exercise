@@ -15,6 +15,7 @@ async function createProduct(req, res) {
     images: req.images
   }
   const [error, data] = await to(productService.create(dataProduct));
+  console.log(error)
   handle(res, data, error)
 }
 // update a product 

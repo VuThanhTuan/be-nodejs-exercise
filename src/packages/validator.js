@@ -1,5 +1,7 @@
 import validate  from 'express-validation'
-import type from './type-products/validator'
+import typeProduct from './type-products/validator'
+import product from './products/validator'
+import category from './cate-products/validator'
 
 
 function parse(object) {
@@ -7,9 +9,12 @@ function parse(object) {
   for (const key of Object.keys(object)) {
     data[key] = validate(object[key])
   }
+  // console.log(data)
   return data
 }
 
 export default {
-  typeProduct: parse(type)
+  typeProduct: parse(typeProduct),
+  product: parse(product),
+  category: parse(category)
 }

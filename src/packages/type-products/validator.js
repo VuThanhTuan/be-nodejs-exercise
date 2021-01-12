@@ -4,12 +4,12 @@ import customizeErrorMessage from '../../utils/base-validate';
 export default {
   validateStore: {
     body: {
-      name: Joi.string().required().max(5).label('name').error(customizeErrorMessage())
+      name: Joi.string().max(5).required().label('name').error(customizeErrorMessage())
     }
   },
   validateUpdate: {
     body: {
-      name: Joi.string().required().label('name').error(customizeErrorMessage()),
+      name: Joi.string().max(5).required().label('name').error(customizeErrorMessage()),
     }
   }
 }
