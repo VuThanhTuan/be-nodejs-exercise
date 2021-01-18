@@ -1,35 +1,23 @@
 {
-  "name": "be-nodejs-exercise",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint \"**/*.js\" --quiet --ignore-pattern node_modules/",
-    "lint-fix": "eslint \"**/*.js\" --ignore-pattern node_modules/ --fix"
+    
+    "serve": "nodemon server.js"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "./*js": [
-      "npm run lint"
-    ]
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "eslint": "^7.16.0",
-    "husky": "^4.3.6",
-    "nodemon": "^2.0.6"
-  },
   "dependencies": {
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "lint-staged": "^10.5.3"
+    "mongoose": "^5.11.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
