@@ -9,7 +9,6 @@ function parse(object) {
   for (const key of Object.keys(object)) {
     data[key] = validate(object[key])
   }
-  // console.log(data)
   return data
 }
 

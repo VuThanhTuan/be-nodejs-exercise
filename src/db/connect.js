@@ -2,7 +2,7 @@ import { connect } from 'mongoose';
 
 const connectToDb = async (connectString) => {
     try {
-        const connection = await connect(connectString, { useNewUrlParser: true,  useUnifiedTopology: true})
+        const connection = await connect(connectString, { useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true})
     } catch (error) {
         console.log(error)
     }

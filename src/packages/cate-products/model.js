@@ -10,6 +10,13 @@ const cateSchema = new Schema({
     ref: 'type-products',
     required: true
   }
-}, { timestamps: true})
+}, { timestamps: true })
+
+cateSchema.post('save', (error, doc, next) => {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    return next(new Error('this category product has been using'))
+  }
+  return next(error)
+})
 
 module.exports = mongoose.model('cate-product', cateSchema)
