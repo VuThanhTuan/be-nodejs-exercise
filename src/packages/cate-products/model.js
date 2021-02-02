@@ -7,7 +7,7 @@ const cateSchema = new Schema({
   },
   typeId: {
     type: Types.ObjectId,
-    ref: 'type-products',
+    ref: 'type-product',
     required: true
   }
 }, { timestamps: true })

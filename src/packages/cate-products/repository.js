@@ -13,7 +13,7 @@ async function getAll() {
   return cateModel.find()
 }
 async function getByTypeId(typeId) {
-  return cateModel.find({typeId: typeId})
+  return cateModel.find({typeId: typeId}).sort('createAt')
 }
 async function destroyByTypeId(typeId) {
   return cateModel.deleteMany({typeId: typeId})

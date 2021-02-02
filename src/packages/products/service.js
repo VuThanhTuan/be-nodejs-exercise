@@ -2,41 +2,71 @@ import errorConstants from '../../constants/error'
 import lodash, { isBuffer } from 'lodash'
 import repo from './repository'
 
-const ALLOWED_ATTRIBUTES = ['productName', 'price', 'description', 'images', 'categoryId', 'avatar']
+const ALLOWED_ATTRIBUTES = ['productName', 'price', 'description', 'images', 'categoryId', 'typeId', 'avatar']
 
 class ProductService {
   // create a product
   async create(req) {
     const data = lodash.pick(req, ALLOWED_ATTRIBUTES)
-    try {
-      const product = await repo.create(data)
-      if (product) {
-        return product
-      }
-    } catch (error) {
-      throw new Error(errorConstants.errorResponse.create)
+    const product = await repo.create(data)
+    if (product) {
+      return product
     }
+    throw new Error(errorConstants.errorResponse.create)
   }
   // update a product
   async update(req, res) {
-    const data = lodash.pick(req, ALLOWED_ATTRIBUTES)
-    try {
-      const product = await repo.update(req.params.productId, data)
-      if (product) {
-        return product
+    const product = await repo.update(req.params.productId, req.body)
+    if (product) {
+      if (req.images) {
+        const listIndexNewImages = JSON.parse(req.body.listIndex);
+        const listDeleteImageIndex = JSON.parse(req.body.listDeleteImageIndex);
+        const oldProduct = await repo.getByProductId(req.params.productId)
+
+        if (oldProduct) {
+          const oldListImage = oldProduct.images;
+          const newProduct = await repo.updateImage(req.params.productId, oldListImage, req.images, listIndexNewImages, listDeleteImageIndex)
+
+          if (newProduct) {
+            return newProduct;
+          }
+
+          throw new Error(errorConstants.errorResponse.updateImage)
+        }
+        throw new Error(errorConstants.errorResponse.getDetailProduct)
       }
-    } catch (error) {
-      throw new Error(errorConstants.errorResponse.update)
+      return product;
     }
+    throw new Error(errorConstants.errorResponse.update)
   }
   //find all product exist in database
-  async FindAll(page) {
-    const data = await repo.getAll(page)
-    return data
+  async FindAll(page, PAGE_SIZE) {
+    const allData = await repo.getAll();
+    const data = await repo.getProduct(page, PAGE_SIZE)
+    const count = await allData.length;
+    return {
+      totalItem: count,
+      data: data
+    }
+  }
+  //find All product search
+  async FindAllProductSearch(typeId, categoryId, keywords, page, PAGE_SIZE) {
+    const allData = await repo.getAll(typeId, categoryId, keywords, page, PAGE_SIZE);
+    const data = await repo.getProductSearch(typeId, categoryId, keywords, page, PAGE_SIZE)
+    const count = await allData.length;
+    return {
+      totalItem: count,
+      data: data
+    }
   }
   //find products with categoryId  
   async FindMany(req) {
     const data = await repo.getByCategory(req.params.categoryId)
+    return data
+  }
+  // find by productId (get detail product)
+  async FindOne(req) {
+    const data = await repo.getByProductId(req.params.productId)
     return data
   }
   // Delete a product by Id

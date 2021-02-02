@@ -27,6 +27,9 @@ export default function customizeErrorMessage() {
         case 'array.unique':
           err.message = `${err.context.label} has been using`
           break
+        case 'string.regex.name':
+          err.message = `${err.context.label} must be ObjectId`
+          break
         default:
           break
       }

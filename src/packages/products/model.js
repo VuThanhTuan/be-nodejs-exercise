@@ -1,3 +1,4 @@
+import { number } from 'joi';
 import mongoose, { Types, Schema } from 'mongoose';
 const autoIncrement = require("mongoose-auto-increment");
 
@@ -26,21 +27,32 @@ const productSchema = new Schema({
   },
   images: [
     {
-      type: String
+      index:{
+        type: Number
+      },
+      url: {
+        type:String
+      }
     }
   ],
   categoryId: {
     type: Types.ObjectId,
-    ref: 'cate-products',
+    ref: 'cate-product',
     required: true
   },
-  // typeId: {
-  //   type: Types.ObjectId,
-  //   ref: 'type-products',
-  //   required: true
-  // }
+  typeId: {
+    type: Types.ObjectId,
+    ref: 'type-product',
+    required: true
+  }
 }, { timestamps: true });
 
+productSchema.post('save', (error, doc, next) => {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    return next(new Error('this name product has been using'))
+  }
+  return next(error)
+})
 // auto increment field productCode
 autoIncrement.initialize(mongoose.connection);
 productSchema.plugin(autoIncrement.plugin, {
@@ -49,11 +61,5 @@ productSchema.plugin(autoIncrement.plugin, {
   startAt: 1, 
   incrementBy: 1, // incremented by 1
 });
-productSchema.post('save', (error, doc, next) => {
-  if (error.name === 'MongoError' && error.code === 11000) {
-    return next(new Error('this name product has been using'))
-  }
-  return next(error)
-})
 
 module.exports = mongoose.model('product', productSchema)

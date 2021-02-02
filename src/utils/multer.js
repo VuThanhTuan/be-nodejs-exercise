@@ -7,9 +7,10 @@ const storage = multer.diskStorage({
     cb(null, './src/public/images')
   },
   filename: function (req, file, cb) {
-    if (file.fieldname == "file") {
+    if (file.fieldname == "file" || file.fieldname == 'avatar') {
       req.body.avatar = req.protocol + '://' + req.get('host') + '/images/' + file.originalname
-    } else {
+    }
+    else {
       if (!req.images || !req.images.length) {
         req.images = [req.protocol + '://' + req.get('host') + '/images/' + file.originalname]
       } else {
@@ -22,14 +23,14 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
   let match = ["image/png", "image/jpeg", "image/jpg"];
   if (match.indexOf(file.mimetype) === -1) {
-    cb(null, false);
-    return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+    req.fileValidationError = 'Only .png, .jpg and .jpeg format allowed!';
+    cb(null, false, req.fileValidationError);
   } else {
     cb(null, true);
   }
 }
 
 const upload = multer({
-  storage: storage, limits: { fileSize: maxSize }, fileFilter: fileFilter
+  storage: storage, fileFilter: fileFilter
 })
 export default upload

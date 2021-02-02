@@ -21,6 +21,11 @@ async function updateCategory(req, res) {
   const [error, data] = await to(cateProductService.update(req))
   handle(res, data, error)
 }
+//get categories by typeId
+async function getByTypeId(req, res) {
+  const [error, data] = await to(cateProductService.findByTypeId(req))
+  handle(res, data, error)
+}
 //delete category by categoryId
 async function deleteCategory(req, res) {
   const [error, data] = await to(cateProductService.delete(req))
@@ -31,5 +36,6 @@ export default {
   getAllCategory,
   createCategory,
   deleteCategory,
-  updateCategory
+  updateCategory,
+  getByTypeId
 }
