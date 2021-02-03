@@ -16,28 +16,22 @@ class ProductService {
   }
   // update a product
   async update(req, res) {
-    const product = await repo.update(req.params.productId, req.body)
-    if (product) {
-      if (req.images) {
-        const listIndexNewImages = JSON.parse(req.body.listIndex);
-        const listDeleteImageIndex = JSON.parse(req.body.listDeleteImageIndex);
-        const oldProduct = await repo.getByProductId(req.params.productId)
+      const productDataUpdate = req.body
+      const listIndexNewImages = !req.body.listIndex ? [] : JSON.parse(req.body.listIndex);
+      const listDeleteImageIndex = !req.body.listDeleteImageIndex ? [] : JSON.parse(req.body.listDeleteImageIndex);
+      const oldProduct = await repo.getByProductId(req.params.productId)
 
-        if (oldProduct) {
-          const oldListImage = oldProduct.images;
-          const newProduct = await repo.updateImage(req.params.productId, oldListImage, req.images, listIndexNewImages, listDeleteImageIndex)
+      if (oldProduct) {
+        const oldListImage = oldProduct.images;
+        const newProduct = await repo.updateOneProduct(req.params.productId, oldListImage, req.images, listIndexNewImages, listDeleteImageIndex, productDataUpdate)
 
-          if (newProduct) {
-            return newProduct;
-          }
-
-          throw new Error(errorConstants.errorResponse.updateImage)
+        if (newProduct) {
+          return newProduct;
         }
-        throw new Error(errorConstants.errorResponse.getDetailProduct)
+
+        throw new Error(errorConstants.errorResponse.update)
       }
-      return product;
-    }
-    throw new Error(errorConstants.errorResponse.update)
+      throw new Error(errorConstants.errorResponse.getDetailProduct)
   }
   //find all product exist in database
   async FindAll(page, PAGE_SIZE) {

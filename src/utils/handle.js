@@ -3,6 +3,7 @@ export default async function returnError(res, data, e) {
     return res.status(400).json({
       isSuccess: false,
       status: 400,
+      code: e.code,
       message: e.message || 'Have error', // Get message from new Error()
     })
   }

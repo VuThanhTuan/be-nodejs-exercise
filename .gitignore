@@ -10,7 +10,7 @@ lerna-debug.log*
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # folder upload
-src/public/images
+src/public/images/*
 
 # Runtime data
 pids

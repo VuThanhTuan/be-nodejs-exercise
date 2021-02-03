@@ -7,7 +7,6 @@ const badRequestError = {
 
 const notFoundError = {
     UserNotFound: 'User Not Found',
-
     TypeNotFound: 'Type product not found',
     ProductNotFound: 'Product not found',
     CateNotFound: 'Category product note found'

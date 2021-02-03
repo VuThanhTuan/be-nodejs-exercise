@@ -5,13 +5,9 @@ async function create(data) {
   return productModel.create(data)
 }
 
-async function update(id, data) {
-  return productModel.findByIdAndUpdate(id, data, { useFindAndModify: false, new: true })
-}
-
-async function updateImage(id, oldListImage, listImageUpdate, listIndexUpdate, listDeleteImageIndex) {
+async function updateOneProduct(id, oldListImage, listImageUpdate, listIndexUpdate, listDeleteImageIndex, productDataUpdate) {
   const newListImage = helper.getUpdateImageData(oldListImage, listImageUpdate, listIndexUpdate, listDeleteImageIndex)
-  return productModel.updateOne({ _id: id }, { $set: { images: newListImage } });
+  return productModel.updateOne({ _id: id }, { $set: { images: newListImage, ...productDataUpdate } });
 }
 
 async function destroy(id) {
@@ -31,7 +27,7 @@ async function getProduct(page, PAGE_SIZE) {
 async function getProductSearch(typeId, categoryId, keywords, page, PAGE_SIZE) {
   PAGE_SIZE = !PAGE_SIZE ? 8 : PAGE_SIZE;
   const skip = (page) * PAGE_SIZE;
-  let products = productModel.find({}).populate({ path: 'categoryId' }).populate({ path: 'typeId' }).sort('updatedAt')
+  let products = productModel.find({}).populate({ path: 'categoryId' }).populate({ path: 'typeId' }).sort('-updatedAt')
   if (typeId && typeId !== '') {
     products.where('typeId').equals(typeId);
   }
@@ -77,7 +73,6 @@ async function destroyByCategory(categoryId) {
 }
 export default {
   create,
-  update,
   destroy,
   getAll,
   getByCategory,
@@ -85,5 +80,5 @@ export default {
   getByProductId,
   getProductSearch,
   getProduct,
-  updateImage
+  updateOneProduct
 }
